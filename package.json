@@ -1,0 +1,35 @@
+{
+  "name": "postmessage-benchmark",
+  "version": "1.0.0",
+  "description": "A benchmark for postmessage and webworker",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "rollup -c build/rollup.config.dev.js -w & rollup -c build/rollup.config.worker.js -w",
+    "lint": "eslint . --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/toxic-johann/postmessage-benchmark.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/toxic-johann/postmessage-benchmark/issues"
+  },
+  "homepage": "https://github.com/toxic-johann/postmessage-benchmark#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.10.0",
+    "eslint-config-egg": "^7.1.0",
+    "install": "^0.12.2",
+    "npm": "^6.5.0",
+    "rollup": "^0.68.0",
+    "rollup-plugin-commonjs": "^9.2.0",
+    "rollup-plugin-livereload": "^0.6.0",
+    "rollup-plugin-node-resolve": "^4.0.0",
+    "rollup-plugin-serve": "^0.6.0",
+    "rollup-plugin-sourcemaps": "^0.4.2"
+  }
+}
