@@ -56,7 +56,7 @@
     promiseMap[currentId] = {
       promise: new Promise(resolve => {
         resolveFn = resolve;
-      }),
+      }).then(() => new Promise(resolve => resolve())),
       resolveFn,
     };
     worker.postMessage({
@@ -74,7 +74,7 @@
         squareMatrixMultiply(data.a, data.b);
         resolveFn = resolve;
         resolve();
-      }),
+      }).then(() => new Promise(resolve => resolve())),
       resolveFn,
     };
     return promiseMap[currentId].promise;
@@ -102,14 +102,14 @@
 
   // add tests
   suite
-    .add('mainthread calculation with 4 dimension', function() {
+    .add('主线程进行 4x4 二维数组计算', function() {
       const data = {
         a: matrix4d,
         b: matrix4d,
       };
       squareMatrixMultiply(data.a, data.b);
     })
-    .add('fake message with 4 dimension', {
+    .add('promise 包裹后进行 4x4 二维数组计算', {
       defer: true,
       fn(deferred) {
         const promise = fakeSendMessage({
@@ -121,7 +121,7 @@
         });
       },
     })
-    .add('fake message and copy with 4 dimension', {
+    .add('promise 包裹后并使用一次 json 复制再进行 4x4 二维数组计算', {
       defer: true,
       fn(deferred) {
         const promise = fakeSendMessageWithCopy({
@@ -133,7 +133,7 @@
         });
       },
     })
-    .add('worker calculation with 4 dimension', {
+    .add('传送到 worker 后进行 4x4 二维数组计算', {
       defer: true,
       fn(deferred) {
         const promise = sendMessage({
@@ -145,14 +145,14 @@
         });
       },
     })
-    .add('mainthread calculation with 40 dimension', function() {
+    .add('主线程进行 40x40 二维数组计算', function() {
       const data = {
         a: matrix40d,
         b: matrix40d,
       };
       squareMatrixMultiply(data.a, data.b);
     })
-    .add('fake message with 40 dimension', {
+    .add('promise 包裹后进行 40x40 二维数组计算', {
       defer: true,
       fn(deferred) {
         const promise = fakeSendMessage({
@@ -164,7 +164,7 @@
         });
       },
     })
-    .add('fake message and copy with 40 dimension', {
+    .add('promise 包裹后并使用一次 json 复制再进行 40x40 二维数组计算', {
       defer: true,
       fn(deferred) {
         const promise = fakeSendMessageWithCopy({
@@ -176,7 +176,7 @@
         });
       },
     })
-    .add('worker calculation with 40 dimension', {
+    .add('传送到 worker 后进行 40x40 二维数组计算', {
       defer: true,
       fn(deferred) {
         const promise = sendMessage({
@@ -188,14 +188,14 @@
         });
       },
     })
-    .add('mainthread calculation with 400 dimension', function() {
+    .add('主线程进行 400x400 二维数组计算', function() {
       const data = {
         a: matrix400d,
         b: matrix400d,
       };
       squareMatrixMultiply(data.a, data.b);
     })
-    .add('fake message with 400 dimension', {
+    .add('promise 包裹后进行 400x400 二维数组计算', {
       defer: true,
       fn(deferred) {
         const promise = fakeSendMessage({
@@ -207,7 +207,7 @@
         });
       },
     })
-    .add('fake message and copy with 400 dimension', {
+    .add('promise 包裹后并使用一次 json 复制再进行 400x400 二维数组计算', {
       defer: true,
       fn(deferred) {
         const promise = fakeSendMessageWithCopy({
@@ -219,7 +219,7 @@
         });
       },
     })
-    .add('worker calculation with 400 dimension', {
+    .add('传送到 worker 后进行 400x400 二维数组计算', {
       defer: true,
       fn(deferred) {
         const promise = sendMessage({
@@ -231,35 +231,34 @@
         });
       },
     })
-    .add('postmessage test with 4 dimension', function() {
+    .add('利用 postmessage 传送 4x4 二维数组', function() {
       const data = {
         noRun: true,
         data: matrix4d,
       };
       worker.postMessage({ data });
     })
-    .add('postmessage test with 40 dimension', function() {
+    .add('利用 postmessage 传送 40x40 二维数组', function() {
       const data = {
         noRun: true,
         data: matrix40d,
       };
       worker.postMessage({ data });
     })
-    .add('postmessage test with 400 dimension', function() {
+    .add('利用 postmessage 传送 400x400 二维数组', function() {
       const data = {
         noRun: true,
         data: matrix400d,
       };
       worker.postMessage({ data });
     })
-    .add('postmessage test with 4000 dimension', function() {
+    .add('利用 postmessage 传送 4000x4000 二维数组', function() {
       const data = {
         noRun: true,
         data: matrix4000d,
       };
       worker.postMessage({ data });
     })
-  // add listeners
     .on('cycle', function(event) {
       console.log(String(event.target));
     })

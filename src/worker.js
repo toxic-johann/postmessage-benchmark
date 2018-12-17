@@ -10,9 +10,9 @@ onmessage = function(event) {
   if (data.noRun) {
     return;
   }
-  const result = squareMatrixMultiply(data.a, data.b);
+  squareMatrixMultiply(data.a, data.b);
   postMessage({
     id,
-    data: result,
+    status: 1,
   });
 };
